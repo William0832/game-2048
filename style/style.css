@@ -45,7 +45,7 @@ header {
 }
 
 .title {
-  font-size: 8vmin;
+  font-size: 8.5vmin;
   padding-bottom: 2vmin;
   text-shadow: rgba(255, 255, 255, 0.2) 0.5vmin 0.3vmin;
 }
@@ -68,9 +68,10 @@ header {
   font-size: 2vmin;
   font-weight: 600;
   transform: translate(-50%, -50%) scale(0);
-  color: hsl(20, 100%, var(--c-lightness));
+  color: #ffae1a;
   -webkit-animation: new-score var(--animation-score-time) ease-in-out;
           animation: new-score var(--animation-score-time) ease-in-out;
+  text-shadow: rgba(0, 0, 0, 0.2) 0.5vmin 0.3vmin;
 }
 
 #game-zone {
@@ -116,7 +117,6 @@ header {
   -webkit-animation: show 200ms ease-in-out;
           animation: show 200ms ease-in-out;
   transition: 180ms ease-in-out;
-  text-shadow: rgba(0, 0, 0, 0.2) 0.5vmin 0.3vmin;
 }
 
 @-webkit-keyframes show {
