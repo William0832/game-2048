@@ -5,7 +5,8 @@ let scoreList = []
 const DOMs = {
   score: document.getElementById('score'),
   history: document.getElementById('history'),
-  gameZone: document.getElementById('game-zone')
+  gameZone: document.getElementById('game-zone'),
+  btns: document.querySelector('.btns')
 }
 const gameController = new Game(DOMs.score, DOMs.history)
 const grid = new Grid(DOMs.gameZone)
@@ -31,6 +32,15 @@ function gameOver() {
 }
 function setupInput() {
   window.addEventListener('keydown', handelInput, { once: true })
+  DOMs.btns.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-btn]')
+    if (!btn) {
+      setupInput()
+      return
+    }
+    const key = btn.dataset.btn
+    await handelInput({ key })
+  }, { once: true })
   DOMs.gameZone.addEventListener('pointerdown', handelPhoneInput, { once: true })
 }
 async function handelPhoneInput(e) {
