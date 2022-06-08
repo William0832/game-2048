@@ -1,13 +1,15 @@
 import Game from './Game.js'
 import Grid from "./Grid.js"
 import Tile from "./Tile.js"
-let scoreList = []
+const EVENT_OPTS = { onces: true }
 const DOMs = {
   score: document.getElementById('score'),
   history: document.getElementById('history'),
   gameZone: document.getElementById('game-zone'),
   btns: document.querySelector('.btns')
 }
+
+let scoreList = []
 const gameController = new Game(DOMs.score, DOMs.history)
 const grid = new Grid(DOMs.gameZone)
 
@@ -26,29 +28,26 @@ function gameOver() {
   initGame()
 }
 function setupInput() {
-  window.addEventListener('keydown', handelInput, { once: true })
-  DOMs.btns.addEventListener('click', async (e) => {
-    console.log(e.target.textContent)
-    const btn = e.target.closest('[data-btn]')
-    if (!btn) {
+  document.addEventListener('keyup', handelInput, EVENT_OPTS)
+  DOMs.gameZone.addEventListener('pointerdown', handelPhoneInput, EVENT_OPTS)
+}
+async function handelPhoneInput(event) {
+  let isUp = false
+  DOMs.gameZone.addEventListener('pointerup',
+    (e) => { isUp = true }, EVENT_OPTS)
+  if (isUp) {
+    setupInput()
+    return
+  }
+  const { x, y } = event
+  DOMs.gameZone.addEventListener('pointermove', async (e) => {
+    if (isUp) {
       setupInput()
       return
     }
-    const key = btn.dataset.btn
-    await handelInput({ key })
-  }, { once: true })
-  DOMs.gameZone.addEventListener('pointerdown', handelPhoneInput, { once: true })
-}
-async function handelPhoneInput(e) {
-  const { x, y } = e
-  DOMs.gameZone.addEventListener('pointermove', async (e) => {
     const { x: newX, y: newY } = e
     const diffX = newX - x
     const diffY = newY - y
-    if (diffX === 0 && diffY === 0) {
-      setupInput()
-      return
-    }
     // X
     if (Math.abs(diffX) > Math.abs(diffY)) {
       switch (diffX > 0) {
@@ -57,7 +56,6 @@ async function handelPhoneInput(e) {
           break
         default:
           await handelInput({ key: 'a' })
-          return
       }
       return
     }
@@ -68,10 +66,8 @@ async function handelPhoneInput(e) {
         break
       default:
         await handelInput({ key: 'w' })
-        return
     }
-  }, { once: true })
-  setupInput()
+  }, EVENT_OPTS)
 }
 async function handelInput(e) {
   const { key } = e
@@ -87,7 +83,6 @@ async function handelInput(e) {
       await slideTiles(groups)
       score = scoreList.reduce((sum, curr) => sum + curr, 0)
       gameController.addScore(score)
-      setupInput()
       break
     case 'ArrowLeft':
     case 'a':
@@ -99,7 +94,6 @@ async function handelInput(e) {
       await slideTiles(groups)
       score = scoreList.reduce((sum, curr) => sum + curr, 0)
       gameController.addScore(score)
-      setupInput()
       break
     case 'ArrowDown':
     case 's':
@@ -112,7 +106,6 @@ async function handelInput(e) {
       await slideTiles(groups)
       score = scoreList.reduce((sum, curr) => sum + curr, 0)
       gameController.addScore(score)
-      setupInput()
       break
     case 'ArrowRight':
     case 'd':
@@ -125,7 +118,6 @@ async function handelInput(e) {
       await slideTiles(groups)
       score = scoreList.reduce((sum, curr) => sum + curr, 0)
       gameController.addScore(score)
-      setupInput()
       break
     default:
       setupInput()
