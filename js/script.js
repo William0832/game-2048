@@ -30,7 +30,7 @@ function setupInput() {
 }
 async function handelPhoneInput(e) {
   const { pointerType, x, y } = e
-  if (pointerType === 'mouse') return
+  // if (pointerType === 'mouse') return
   DOMs.gameZone.addEventListener('pointermove', (e) => {
     const { x: newX, y: newY } = e
     const diffX = newX - x
