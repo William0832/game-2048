@@ -13,12 +13,17 @@ const grid = new Grid(DOMs.gameZone)
 initGame()
 
 function initGame() {
-  gameController.load()
-  gameController.score = 0
-  grid.init()
-  grid.randomEmptyCell().tile = new Tile(DOMs.gameZone)
-  grid.randomEmptyCell().tile = new Tile(DOMs.gameZone)
-  setupInput()
+  try {
+    gameController.load()
+    gameController.score = 0
+    grid.init()
+    grid.randomEmptyCell().tile = new Tile(DOMs.gameZone)
+    grid.randomEmptyCell().tile = new Tile(DOMs.gameZone)
+    setupInput()
+  } catch (err) {
+    alert(err.message)
+  }
+
 }
 function gameOver() {
   alert('Game Over')
