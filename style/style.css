@@ -124,9 +124,10 @@ button {
   padding-top: 1vmin;
   padding-bottom: 1vmin;
   border-radius: 1vmin;
-  font-size: 2.5vmin;
+  font-size: 1.5vmin;
   transform: translateY(-0.5vmin);
-  box-shadow: 0 1vmin 0vmin 0 rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0.5vmin 0 rgba(255, 255, 255, 0.5);
+  border: none;
   transition: all 150ms;
 }
 button:active {
@@ -135,7 +136,7 @@ button:active {
 }
 
 .btns {
-  margin: 3vmin 10vmin 0;
+  margin: 2vmin 10vmin 0;
   display: grid;
   grid-gap: 1vmin;
   grid-template-columns: repeat(3, 1fr);

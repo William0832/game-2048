@@ -33,6 +33,7 @@ function gameOver() {
 function setupInput() {
   window.addEventListener('keydown', handelInput, { once: true })
   DOMs.btns.addEventListener('click', async (e) => {
+    alert(e.target.textContent)
     const btn = e.target.closest('[data-btn]')
     if (!btn) {
       setupInput()
