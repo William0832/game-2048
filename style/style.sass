@@ -8,15 +8,22 @@
   --cell-gap: 2vmin
   --bdrs: 1vmin
   --animation-score-time: 1000ms
-body
-  margin: 0 auto
+html
+  margin: 0
+  padding: 0
+  width: 100vw
   height: 100vh
+body
+  background-color: #333
+  margin: 0 auto
+  height: 100%
   display: flex
   flex-direction: column
   align-items: stretch
   justify-content: center
   width: min-content
 header
+  color: rgb(186,172,159)
   display: flex
   align-items: center
   justify-content: space-between
@@ -25,9 +32,14 @@ header
   padding: 2vmin
 .title
   font-size: 8vmin
+  padding-bottom: 2vmin
+  text-shadow: rgba(white, 0.2) 0.5vmin 0.3vmin
 .score-box
   display: block
   text-align: center
+  font-size: 4vmin
+  text-shadow: rgba(white, 0.2) 0.5vmin 0.3vmin
+
 #score
   --c-lightness: 50%
   position: relative
@@ -79,6 +91,8 @@ header
   color: hsl(25, 50%, var(--c-lightness))
   animation: show 200ms ease-in-out
   transition: 180ms ease-in-out
+  text-shadow: rgba(black, 0.2) 0.5vmin 0.3vmin
+
 @keyframes show
   0%
     opacity: .5

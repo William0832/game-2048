@@ -14,9 +14,17 @@
   --animation-score-time: 1000ms;
 }
 
-body {
-  margin: 0 auto;
+html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
   height: 100vh;
+}
+
+body {
+  background-color: #333;
+  margin: 0 auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -27,6 +35,7 @@ body {
 }
 
 header {
+  color: rgb(186, 172, 159);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,11 +46,15 @@ header {
 
 .title {
   font-size: 8vmin;
+  padding-bottom: 2vmin;
+  text-shadow: rgba(255, 255, 255, 0.2) 0.5vmin 0.3vmin;
 }
 
 .score-box {
   display: block;
   text-align: center;
+  font-size: 4vmin;
+  text-shadow: rgba(255, 255, 255, 0.2) 0.5vmin 0.3vmin;
 }
 
 #score {
@@ -103,6 +116,7 @@ header {
   -webkit-animation: show 200ms ease-in-out;
           animation: show 200ms ease-in-out;
   transition: 180ms ease-in-out;
+  text-shadow: rgba(0, 0, 0, 0.2) 0.5vmin 0.3vmin;
 }
 
 @-webkit-keyframes show {
