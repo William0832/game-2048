@@ -26,6 +26,42 @@ function gameOver() {
 }
 function setupInput() {
   window.addEventListener('keydown', handelInput, { once: true })
+  DOMs.gameZone.addEventListener('pointerdown', handelPhoneInput, { once: true })
+}
+async function handelPhoneInput(e) {
+  const { pointerType, x, y } = e
+  if (pointerType === 'mouse') return
+  DOMs.gameZone.addEventListener('pointermove', (e) => {
+    const { x: newX, y: newY } = e
+    const diffX = newX - x
+    const diffY = newY - y
+    if (diffX === 0 && diffY === 0) {
+      setupInput()
+      return
+    }
+    // X
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      switch (diffX > 0) {
+        case true:
+          handelInput({ key: 'd' })
+          break
+        default:
+          handelInput({ key: 'a' })
+          return
+      }
+      return
+    }
+    // Y
+    switch (diffY > 0) {
+      case true:
+        handelInput({ key: 's' })
+        break
+      default:
+        handelInput({ key: 'w' })
+        return
+    }
+  }, { once: true })
+  setupInput()
 }
 async function handelInput(e) {
   const { key } = e
