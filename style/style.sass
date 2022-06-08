@@ -1,0 +1,91 @@
+*, *::after, *::before
+  box-sizing: border-box
+
+\:root
+  --grid-size: 4
+  --cell-size: 20vmin
+  --cell-gap: 2vmin
+  --bdrs: 1vmin
+
+body
+  margin: 0 auto
+  height: 100vh
+  display: flex
+  flex-direction: column
+  align-items: stretch
+  justify-content: flex-start
+  width: min-content
+header
+  display: flex
+  align-items: center
+  justify-content: space-between
+  font-weight: 600
+  font-size: 2.5vmin
+  padding: 2vmin
+.title
+  font-size: 8vmin
+.score-box
+  display: block
+  text-align: center
+#score
+  --new-score: '+20'
+  position: relative
+  &::after
+    top: 0
+    font-size: 2vmin
+    opacity: 0
+    position: absolute
+    display: block
+    content: var(--new-score)
+    opacity: 0
+    animation: new-score 400ms ease-in-out
+#game-zone
+  --grid-size: 4
+  margin-bottom: 10vmin
+  background-color: #BBAC9F
+  display: grid
+  grid-template-columns: repeat(var(--grid-size), var(--cell-size))
+  grid-template-rows: repeat(var(--grid-size), var(--cell-size))
+  grid-gap: var(--cell-gap)
+  padding: var(--cell-gap)
+  border-radius: var(--bdrs)
+  position: relative
+  border-radius: var(--bdrs)
+  margin: 0 auto
+.cell
+  background-color: #CCC0B3
+  width: var(--cell-size)
+  height: var(--cell-size)
+  border-radius: 1vmin
+
+.tile
+  --x: 1
+  --y: 2
+  --bgc-lightness: 50%
+  --c-lightness: 100%
+  display: flex
+  align-items: center
+  justify-content: center
+  font-weight: 600
+  font-size: 6vmin
+  position: absolute
+  width: var(--cell-size)
+  height: var(--cell-size)
+  border-radius: var(--bdrs)
+  top: calc(var(--cell-gap) + calc(var(--cell-gap) + var(--cell-size)) * var(--y))
+  left: calc(var(--cell-gap) + calc(var(--cell-gap) + var(--cell-size)) * var(--x))
+  background-color: hsl(25, 50%, var(--bgc-lightness))
+  color: hsl(25, 50%, var(--c-lightness))
+  animation: show 150ms ease-in-out
+  transition: 100ms ease-in-out
+@keyframes show
+  0%
+    opacity: .5
+    transform: scale(0)
+
+@keyframes new-score
+  50%
+    opacity: 60%
+    transform: translate(20px, 30px)
+  100%
+    opacity: 0
