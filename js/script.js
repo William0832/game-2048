@@ -56,7 +56,10 @@ async function handelPhoneInput(event) {
           break
         default:
           await handelInput({ key: 'a' })
+          break
       }
+      isUp = true
+      // console.log('x')
       return
     }
     // Y
@@ -66,7 +69,11 @@ async function handelPhoneInput(event) {
         break
       default:
         await handelInput({ key: 'w' })
+        break
     }
+    isUp = true
+    // console.log(' y')
+    return
   }, EVENT_OPTS)
 }
 async function handelInput(e) {
