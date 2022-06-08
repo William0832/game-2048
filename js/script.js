@@ -34,9 +34,8 @@ function setupInput() {
   DOMs.gameZone.addEventListener('pointerdown', handelPhoneInput, { once: true })
 }
 async function handelPhoneInput(e) {
-  const { pointerType, x, y } = e
-  // if (pointerType === 'mouse') return
-  DOMs.gameZone.addEventListener('pointermove', (e) => {
+  const { x, y } = e
+  DOMs.gameZone.addEventListener('pointermove', async (e) => {
     const { x: newX, y: newY } = e
     const diffX = newX - x
     const diffY = newY - y
@@ -48,10 +47,10 @@ async function handelPhoneInput(e) {
     if (Math.abs(diffX) > Math.abs(diffY)) {
       switch (diffX > 0) {
         case true:
-          handelInput({ key: 'd' })
+          await handelInput({ key: 'd' })
           break
         default:
-          handelInput({ key: 'a' })
+          await handelInput({ key: 'a' })
           return
       }
       return
@@ -59,10 +58,10 @@ async function handelPhoneInput(e) {
     // Y
     switch (diffY > 0) {
       case true:
-        handelInput({ key: 's' })
+        await handelInput({ key: 's' })
         break
       default:
-        handelInput({ key: 'w' })
+        await handelInput({ key: 'w' })
         return
     }
   }, { once: true })
