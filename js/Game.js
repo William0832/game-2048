@@ -1,7 +1,6 @@
 const STORAGE_KEY = 'game-2048-setting'
 export default class Game {
   #score = 0
-  // #addScoreList = []
   #history = 0
   #scoreEl
   #historyEl
@@ -24,7 +23,7 @@ export default class Game {
     addValue = addValue || 0
     if (!addValue) return
     this.score += addValue
-    return this.popupScore(addValue)
+    return await this.popupScore(addValue)
   }
   get history() {
     return this.#history
