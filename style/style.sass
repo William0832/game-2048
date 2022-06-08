@@ -9,7 +9,6 @@
   --bdrs: 1vmin
   --animation-score-time: 1000ms
 html
-  touch-action: none
   margin: 0
   padding: 0
   width: 100vw
@@ -55,6 +54,7 @@ header
     animation: new-score var(--animation-score-time) ease-in-out
     text-shadow: rgba(black, 0.2) 0.5vmin 0.3vmin
 #game-zone
+  touch-action: none
   --grid-size: 4
   margin-bottom: 10vmin
   background-color: #BBAC9F
