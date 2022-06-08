@@ -7,6 +7,7 @@
   --cell-size: 20vmin;
   --cell-gap: 2vmin;
   --bdrs: 1vmin;
+  --animation-score-time: 1000ms;
 }
 
 body {
@@ -40,19 +41,19 @@ header {
 }
 
 #score {
-  --new-score: "+20";
+  --c-lightness: 50%;
   position: relative;
 }
-#score::after {
-  top: 0;
-  font-size: 2vmin;
-  opacity: 0;
+#score .add-score {
+  top: 50%;
+  left: 50%;
   position: absolute;
-  display: block;
-  content: var(--new-score);
-  opacity: 0;
-  -webkit-animation: new-score 400ms ease-in-out;
-          animation: new-score 400ms ease-in-out;
+  font-size: 2vmin;
+  font-weight: 600;
+  transform: translate(-50%, -50%) scale(0);
+  color: hsl(20, 100%, var(--c-lightness));
+  -webkit-animation: new-score var(--animation-score-time) ease-in-out;
+          animation: new-score var(--animation-score-time) ease-in-out;
 }
 
 #game-zone {
@@ -95,9 +96,9 @@ header {
   left: calc(var(--cell-gap) + (var(--cell-gap) + var(--cell-size)) * var(--x));
   background-color: hsl(25, 50%, var(--bgc-lightness));
   color: hsl(25, 50%, var(--c-lightness));
-  -webkit-animation: show 150ms ease-in-out;
-          animation: show 150ms ease-in-out;
-  transition: 100ms ease-in-out;
+  -webkit-animation: show 200ms ease-in-out;
+          animation: show 200ms ease-in-out;
+  transition: 180ms ease-in-out;
 }
 
 @-webkit-keyframes show {
@@ -115,19 +116,29 @@ header {
 }
 @-webkit-keyframes new-score {
   50% {
-    opacity: 60%;
-    transform: translate(20px, 30px);
+    opacity: 1;
+    transform: translate(2vmin, -5vmin) scale(1);
+  }
+  70% {
+    opacity: 0.2;
+    transform: translate(2vmin, -5vmin) scale(0.5);
   }
   100% {
     opacity: 0;
+    transform: translate(3vmin, -5vmin) scale(0);
   }
 }
 @keyframes new-score {
   50% {
-    opacity: 60%;
-    transform: translate(20px, 30px);
+    opacity: 1;
+    transform: translate(2vmin, -5vmin) scale(1);
+  }
+  70% {
+    opacity: 0.2;
+    transform: translate(2vmin, -5vmin) scale(0.5);
   }
   100% {
     opacity: 0;
+    transform: translate(3vmin, -5vmin) scale(0);
   }
 }/*# sourceMappingURL=style.css.map */

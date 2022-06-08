@@ -1,19 +1,35 @@
+import Game from './Game.js'
 import Grid from "./Grid.js"
 import Tile from "./Tile.js"
-import Score from './Score.js'
-let score = 0
-const scoreBox = new Score('#score')
-const gameZone = document.getElementById('game-zone')
-const grid = new Grid(gameZone)
+let scoreList = []
+const DOMs = {
+  score: document.getElementById('score'),
+  history: document.getElementById('history'),
+  gameZone: document.getElementById('game-zone')
+}
+const gameController = new Game(DOMs.score, DOMs.history)
+const grid = new Grid(DOMs.gameZone)
 
 initGame()
 
+function initGame() {
+  gameController.load()
+  gameController.score = 0
+  grid.init()
+  grid.randomEmptyCell().tile = new Tile(DOMs.gameZone)
+  grid.randomEmptyCell().tile = new Tile(DOMs.gameZone)
+  setupInput()
+}
+function gameOver() {
+  alert('Game Over')
+  initGame()
+}
 function setupInput() {
   window.addEventListener('keydown', handelInput, { once: true })
 }
 async function handelInput(e) {
   const { key } = e
-  let groups
+  let groups, score
   switch (key) {
     case 'ArrowUp':
     case 'w':
@@ -23,6 +39,8 @@ async function handelInput(e) {
         return
       }
       await slideTiles(groups)
+      score = scoreList.reduce((sum, curr) => sum + curr, 0)
+      gameController.addScore(score)
       setupInput()
       break
     case 'ArrowLeft':
@@ -33,6 +51,8 @@ async function handelInput(e) {
         return
       }
       await slideTiles(groups)
+      score = scoreList.reduce((sum, curr) => sum + curr, 0)
+      gameController.addScore(score)
       setupInput()
       break
     case 'ArrowDown':
@@ -44,6 +64,8 @@ async function handelInput(e) {
         return
       }
       await slideTiles(groups)
+      score = scoreList.reduce((sum, curr) => sum + curr, 0)
+      gameController.addScore(score)
       setupInput()
       break
     case 'ArrowRight':
@@ -55,18 +77,20 @@ async function handelInput(e) {
         return
       }
       await slideTiles(groups)
+      score = scoreList.reduce((sum, curr) => sum + curr, 0)
+      gameController.addScore(score)
       setupInput()
       break
     default:
       setupInput()
-      break
+      return
   }
   grid.cells.forEach(cell => cell.mergeTiles())
-  const newTile = new Tile(gameZone)
+  const newTile = new Tile(DOMs.gameZone)
   grid.randomEmptyCell().tile = newTile
   if (isGameOver()) {
     await newTile.waitTransition(true)
-    storeScore(score)
+    gameController.save()
     gameOver()
     return
   }
@@ -83,9 +107,9 @@ function canMove(groups) {
   )
 }
 function slideTiles(groups) {
+  scoreList = []
   return Promise.all(
     groups.flatMap(group => {
-      let addValue = 0
       const promises = []
       for (let i = 1; i < group.length; i++) {
         const cell = group[i]
@@ -100,18 +124,12 @@ function slideTiles(groups) {
           promises.push(cell.tile.waitTransition())
           if (lastMoveCell.tile != null) {
             lastMoveCell.mergeTile = cell.tile
-            addValue += lastMoveCell.mergeTile.value * 2
+            scoreList.push(lastMoveCell.mergeTile.value * 2)
           } else {
             lastMoveCell.tile = cell.tile
           }
           cell.tile = null
         }
-      }
-      if (addValue) {
-        let oldScore = score
-        score += addValue
-
-        showScore(score, addValue)
       }
       return promises
     }))
@@ -128,30 +146,4 @@ function isGameOver() {
     return true
   }
   return false
-}
-function gameOver() {
-  alert('Game Over')
-  initGame()
-}
-function initGame() {
-  score = 0
-  showHistoryScore()
-  showScore(score)
-  grid.init()
-  grid.randomEmptyCell().tile = new Tile(gameZone)
-  grid.randomEmptyCell().tile = new Tile(gameZone)
-  setupInput()
-}
-function storeScore(score) {
-  const oldScore = localStorage.getItem('game-score')
-  if (!oldScore || +oldScore < score) {
-    localStorage.setItem('game-score', score)
-  }
-}
-function showScore(newScore, addScore) {
-  document.getElementById('score').textContent = newScore
-}
-function showHistoryScore() {
-  const historyScore = +localStorage.getItem('game-score')
-  document.getElementById('history').textContent = historyScore
 }
