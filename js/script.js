@@ -14,17 +14,12 @@ const grid = new Grid(DOMs.gameZone)
 initGame()
 
 function initGame() {
-  try {
-    gameController.load()
-    gameController.score = 0
-    grid.init()
-    grid.randomEmptyCell().tile = new Tile(DOMs.gameZone)
-    grid.randomEmptyCell().tile = new Tile(DOMs.gameZone)
-    setupInput()
-  } catch (err) {
-    alert(err.message)
-  }
-
+  gameController.load()
+  gameController.score = 0
+  grid.init()
+  grid.randomEmptyCell().tile = new Tile(DOMs.gameZone)
+  grid.randomEmptyCell().tile = new Tile(DOMs.gameZone)
+  setupInput()
 }
 function gameOver() {
   alert('Game Over')
@@ -33,7 +28,7 @@ function gameOver() {
 function setupInput() {
   window.addEventListener('keydown', handelInput, { once: true })
   DOMs.btns.addEventListener('click', async (e) => {
-    alert(e.target.textContent)
+    console.log(e.target.textContent)
     const btn = e.target.closest('[data-btn]')
     if (!btn) {
       setupInput()
